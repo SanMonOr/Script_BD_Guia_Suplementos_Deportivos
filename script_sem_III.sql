@@ -366,14 +366,18 @@ de "¡Fracaso!" si no se modifica.
 */
 
 delimiter *
-create function cambiarContrasena(_usuario_id int, _contrasena_actual varchar(45), _contrasena_nueva varchar(45))
+create function cambiarContrasena(_usuario_id int, _contrasena_actual varchar(45), _contrasena_nueva varchar(45)) 
 returns varchar(9)
+
+-- "deterministic" es una palabra clave que le dice al sistema que la función siempre va a operar de la misma manera dados los mismos parámetros de entrada.
 deterministic
 begin
 	declare contrasena varchar(45);
     
+    -- Almacena la contraseña del usuario en cuestión a la variable local "contrasena"
     select U.contrasena into contrasena from Usuarios as U where U.id = _usuario_id;
     
+    -- Si la contraseña actual suministrada por el usuario coincide con su contraseña actual almacenada en la base de datos, esta es modificada con la contraseña nueva que administre.
     if _contrasena_actual = contrasena then
 		update Usuarios as U set U.contrasena = _contrasena_nueva where U.id = _usuario_id;
         return '¡Éxito';
