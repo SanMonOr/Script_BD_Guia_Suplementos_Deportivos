@@ -393,8 +393,6 @@ select cambiarContrasena(1, 'macam1020', 'nueva_contraseña');
 
 */
 
-
-
 	-- 3
 /* 
 
