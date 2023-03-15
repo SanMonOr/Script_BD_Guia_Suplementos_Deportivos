@@ -359,7 +359,7 @@ insert into Usuarios(nombres, apellidos, telefono, email, contrasena) values ('L
 insert into Usuarios(nombres, apellidos, telefono, email, contrasena) values ('Juan Camilo', 'Pineda Ortiz', '3208343458', 'juan_pineda@gmail.com', '12345678');	
 
 -- Funciones
-    -- 1
+    -- 1. Santiago Monsalve Ortiz
 /*
 cambiarContrasena() permite cambiar la contraseña de un usuario si este suministra la contraseña actual correctamente, y retorna un mensaje de "¡Éxito!" si la contraseña se modifica o
 de "¡Fracaso!" si no se modifica.
