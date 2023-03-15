@@ -387,6 +387,7 @@ end
 select cambiarContrasena(1, 'vieja_contraseña', 'nueva_contraseña');
 -- Prueba funcionamiento "¡Éxito!"
 select cambiarContrasena(1, 'macam1020', 'nueva_contraseña');
+select cambiarContrasena(1, 'nueva_contraseña', 'macam1020');
 
 	-- 2
 /* 
