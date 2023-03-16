@@ -424,7 +424,33 @@ $
 select porciones_x_peso(1,4); /*Invocación de la función con la sentencia SELECT*/
 /*Para el ejemplo se envía el id 1 correspondiente a la proteína Best Protein, y el tamaño de 4 libras*/
 
-	-- 3
-/* 
+	-- 3. Juan Sebastián Zambrano A.
+-- Muestrar la cantidad de nutrientes que tiene un suplemento por medio de su ID.
+DELIMITER //
 
-*/
+CREATE FUNCTION cantNutrientes(id INT)                                                         -- nombre de la función (cantNutrientes) que recibe como parametro el id de cada uno de los Suplementos.
+RETURNS INT                                                                                    -- Rotorno de la función en un tipo de dato (INT)             
+BEGIN																						   -- Inicio de mi función
+    DECLARE cantidad INT;                                                                      -- Declaro la varible cantidad la cual es la que me va retornar mi resultado en un Entero.
+    IF id = 1 THEN                                                                             -- Condición 1: si recibe como parametro el número 1 quiero que cuente la cantidad de nutrientes en la tabla (Nutrientes_x_suplemento) donde el id del suplemento sea el número 1.
+        SELECT COUNT(*) INTO cantidad FROM Nutrientes_x_suplemento WHERE suplemento_id = 1;
+    ELSEIF id = 2 THEN                                                                         -- Condición 2: si recibe como parametro el número 2 quiero que cuente la cantidad de nutrientes en la tabla (Nutrientes_x_suplemento) donde el id del suplemento sea el número 2.
+        SELECT COUNT(*) INTO cantidad FROM Nutrientes_x_suplemento WHERE suplemento_id = 2;  
+    ELSEIF id = 3 THEN						                               -- Condición 3: si recibe como parametro el número 3 quiero que cuente la cantidad de nutrientes en la tabla (Nutrientes_x_suplemento) donde el id del suplemento sea el número 3.
+        SELECT COUNT(*) INTO cantidad FROM Nutrientes_x_suplemento WHERE suplemento_id = 3;
+    ELSEIF id = 4 THEN									       -- Condición 4: si recibe como parametro el número 4 quiero que cuente la cantidad de nutrientes en la tabla (Nutrientes_x_suplemento) donde el id del suplemento sea el número 4.
+        SELECT COUNT(*) INTO cantidad FROM Nutrientes_x_suplemento WHERE suplemento_id = 4;
+    ELSEIF id = 5 THEN									       -- Condición 5: si recibe como parametro el número 5 quiero que cuente la cantidad de nutrientes en la tabla (Nutrientes_x_suplemento) donde el id del suplemento sea el número 5.
+        SELECT COUNT(*) INTO cantidad FROM Nutrientes_x_suplemento WHERE suplemento_id = 5;
+    ELSEIF id = 6 THEN									       -- Condición 6: si recibe como parametro el número 6 quiero que cuente la cantidad de nutrientes en la tabla (Nutrientes_x_suplemento) donde el id del suplemento sea el número 6.
+        SELECT COUNT(*) INTO cantidad FROM Nutrientes_x_suplemento WHERE suplemento_id = 6;
+    ELSE										       -- Si no se cumple ninguna de las condiciones, quiero que retorne un valor invalido.
+        SET cantidad = -1; -- retorna -1 si se ingresó un valor inválido
+    END IF;                                                                                    -- Fin de la condición
+    RETURN cantidad;                                                                           -- Retorno del resultado en la varible cantidad.
+END                                                                                            -- Fin de la Función.
+
+DELIMITER ;
+
+SELECT cantNutrientes(1);                                                                      -- Para mostrar la cantidad de nutrientes que tiene el suplemento 1
+
