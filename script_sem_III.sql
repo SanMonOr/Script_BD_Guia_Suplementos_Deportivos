@@ -393,10 +393,36 @@ select cambiarContrasena(1, 'vieja_contraseña', 'nueva_contraseña');
 select cambiarContrasena(1, 'macam1020', 'nueva_contraseña');
 select cambiarContrasena(1, 'nueva_contraseña', 'macam1020');
 
-	-- 2
-/* 
-
+	-- 2. Ángela Daniela Silva Méndez
+/*
+La función porciones_x_peso(), determina el peso en gramos de un suplemento y sus respectivas porciones por envase. Recibe el id y el peso en libras de un suplemento y calcula los valores respectivos. 
 */
+
+drop function if exists porciones_x_peso;
+
+/*Se establece el delimitador $ para definir la función y permitir que esta pase varias declaraciones separadas por punto y comas como una sola instrucción*/
+delimiter $ 
+/*Se crea la función porciones_x_peso, que recibe como parametros de entrada: "suplemento" (de tipo entero) para recibir el id del suplemento deseado y "tamaño" (de tipo float) para recibir el peso en libras de este.
+Se indica que la función devolverá un valor de tipo varchar
+Y por ultimo, se indica que la función será de tipo "deterministic", es decir, que siempre devolverá los mismos resultados si se proporcionan los mismos valores de entrada */
+create function porciones_x_peso (suplemento int, tamaño float) 
+returns varchar(40) deterministic
+begin /* Inicio del bloque de código de la función*/
+	declare libras, gramos float; /*Se declaran las variables "libras" y "gramos" para almacenar los pesos en lb y g del suplemento */
+    declare porciones int; /*Se declara la variable "porciones" para almacenar las porciones por envase del suplemento */
+    declare resultado varchar(40); /*Se declara la variable "resultado" para almacenar el resultado final de la función*/
+    set libras = (select peso_lb from Suplementos where id=suplemento); /* Se inicializa la variable "libras" y se le asigna el valor del peso_lb registrado en la base de datos, al cual se accede mediante una consulta SELECT */
+    set gramos = (select peso_g from Suplementos where id=suplemento); /* Se inicializa la variable "gramos" y se le asigna el valor del peso_g registrado en la base de datos, al cual se accede mediante una consulta SELECT */
+    set porciones = (select porciones_x_envase from Suplementos where id=suplemento);/* Se inicializa la variable porciones y se le asigna el valor de porciones_x_envase registrado en la base de datos, al cual se accede mediante una consulta SELECT */
+    set gramos = round((tamaño*gramos)/libras); /*Se le asigna a la variable "gramos" el resultado de esta operación para calcular el nuevo gramaje y se utiliza la función ROUND para redondear el número y dejarlo sin decimales*/
+    set porciones= (porciones*tamaño)/libras; /*Se le asigna a la variable "porciones" el resultado de esta operación para calcular las porciones correspondientes de dicho gramaje*/
+    set resultado = concat(gramos, 'g que equivale a ', porciones, ' porciones'); /*Se inicializa la variable "resultado" y se utiliza la función CONCAT para concatenar (unir) los valores de las dos variables anteriores*/
+    return resultado; /*Se retorna la variable "resultado" como resultado final de la función*/
+end /*Fin del bloque*/
+$
+
+select porciones_x_peso(1,4); /*Invocación de la función con la sentencia SELECT*/
+/*Para el ejemplo se envía el id 1 correspondiente a la proteína Best Protein, y el tamaño de 4 libras*/
 
 	-- 3
 /* 
